@@ -230,9 +230,9 @@ class _MarkerCustomWidgetState extends State<MarkerCustomWidget> {
               ),
             )
           : const Icon(
-              Icons.location_on,
-              color: AppColor.blue,
-              size: 30,
+              Icons.local_hospital_rounded,
+              color: AppColor.red,
+              size: 40,
             ),
     );
   }
