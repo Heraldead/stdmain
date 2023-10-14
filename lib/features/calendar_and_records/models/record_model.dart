@@ -1,5 +1,5 @@
 enum TypeRecord {
-  sexualAct('Половой акт'),
+  sexualHealth('Половой акт'),
   symptoms('Симптомы');
 
   final String title;
