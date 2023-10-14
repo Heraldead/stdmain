@@ -48,8 +48,8 @@ class CustomAppBarWidget extends StatelessWidget {
                 Navigator.of(context).pop();
               },
             ),
-            const SizedBox(width: 6),
           ],
+          const SizedBox(width: 12),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 12, 16, 12),
