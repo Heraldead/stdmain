@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:std/features/calendar/models/record_model.dart';
+import 'package:std/features/calendar_and_records/models/record_model.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarWidget extends StatefulWidget {
@@ -33,18 +33,25 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       },
       eventLoader: widget.getEventsForDay,
       calendarStyle: CalendarStyle(
-        selectedDecoration: BoxDecoration(
+        selectedDecoration: const BoxDecoration(
           shape: BoxShape.circle,
-          color: Theme.of(context).colorScheme.primary,
+          color: Color(0xFFF03F54),
         ),
         todayDecoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: Theme.of(context).colorScheme.primary),
+          border: Border.all(
+            color: const Color(0xFF005BA1),
+          ),
         ),
-        todayTextStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
+        todayTextStyle: const TextStyle(
+          color: Colors.black,
+          fontSize: 14,
+          fontFamily: 'Roboto',
+          fontWeight: FontWeight.w500,
+        ),
         markerDecoration: const BoxDecoration(
           shape: BoxShape.circle,
-          color: Color(0xffF03F54),
+          color: Colors.black87,
         ),
       ),
       focusedDay: _focusedDay,
