@@ -26,6 +26,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     return TableCalendar(
       firstDay: DateTime.utc(2020, 10, 16),
       lastDay: DateTime.utc(2030, 3, 14),
+      locale: 'ru',
+      startingDayOfWeek: StartingDayOfWeek.monday,
       availableCalendarFormats: const {
         CalendarFormat.month: 'Неделя',
         CalendarFormat.twoWeeks: 'Месяц',

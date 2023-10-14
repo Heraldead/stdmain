@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:std/core/widgets/custom_app_bar.dart';
 import 'package:std/features/calendar_and_records/models/record_model.dart';
 import 'package:std/features/calendar_and_records/presentation/calendar/components/record.dart';
+import 'package:std/features/calendar_and_records/presentation/event_record/event_record_screen.dart';
 
 import 'components/calendar.dart';
 
@@ -18,6 +19,23 @@ class _CalendarScreenState extends State<CalendarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFF005BA1),
+        focusColor: const Color(0xFFF03F54),
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (_) {
+              return const EventRecordScreen();
+            },
+          ));
+        },
+        child: const Center(
+          child: Text(
+            '📝',
+            style: TextStyle(fontSize: 24),
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [
