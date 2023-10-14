@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:std/core/app_color.dargt.dart';
 import 'package:std/core/widgets/custom_app_bar.dart';
-
 import 'package:std/features/information/domain/entities/descrription_entities.dart';
 import 'package:std/features/information/presentation/more_info.dart';
 
@@ -26,12 +25,7 @@ class _InformationScreenState extends State<InformationScreen> {
               icon: '🔍',
             ),
             const Padding(
-              padding: EdgeInsets.only(
-                left: 12.0,
-                right: 12.0,
-                top: 16,
-                bottom: 6,
-              ),
+              padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 16, bottom: 6),
               child: Text(
                 'ПОИСК',
                 style: TextStyle(
@@ -43,23 +37,21 @@ class _InformationScreenState extends State<InformationScreen> {
             ),
             const Padding(
               padding: EdgeInsets.only(bottom: 12, left: 10, right: 12),
-              child: SizedBox(
-                height: 36,
-                child: TextField(
-                  decoration: InputDecoration(
-                    labelText: 'ВВЕДИТЕ ВАШИ СИМПТОМЫ',
-                    border: OutlineInputBorder(),
-                  ),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Вич',
+                  helperText: 'ВВЕДИТЕ ВАШИ СИМПТОМЫ',
+                  border: OutlineInputBorder(),
                 ),
               ),
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
               child: Text(
-                'ПОПУЛЯРНЫЕ ВИДЫ ЗАБОЛЕВАНИЙ',
+                'РАСПРОСТРАНЁННЫЕ ВИДЫ ЗАБОЛЕВАНИЙ',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: AppColor.blue,
                 ),
@@ -71,54 +63,55 @@ class _InformationScreenState extends State<InformationScreen> {
                 height: 60,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, int) {
-                    return Container(
-                      width: 150,
-                      height: 60,
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          8,
-                        ),
-                        color: AppColor.blue,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Flexible(
-                            child: Text(
-                              '${DescriptionEntity.popularEntities[int].name}',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: AppColor.white,
-                              ),
-                            ),
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        _gotoDetailsPage(
+                          context,
+                          DescriptionEntity.illlnessEntities[index].name,
+                          DescriptionEntity.illlnessEntities[index].allDescription,
+                          DescriptionEntity.illlnessEntities[index].image,
+                          '',
+                        );
+                      },
+                      child: Container(
+                        width: 150,
+                        height: 60,
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            8,
                           ),
-                          Flexible(
-                            child: Text(
-                              '${DescriptionEntity.popularEntities[int].description}',
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: AppColor.white,
+                          color: AppColor.blue,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                DescriptionEntity.illlnessEntities[index].name,
+                                style: const TextStyle(fontSize: 16, color: AppColor.white),
                               ),
-                              softWrap: true,
-                              textDirection: TextDirection
-                                  .ltr, // направление текста слева направо
-                              overflow: TextOverflow
-                                  .ellipsis, // обрезка текста, если он превышает доступную длину
                             ),
-                          )
-                        ],
+                            Flexible(
+                              child: Text(
+                                DescriptionEntity.illlnessEntities[index].description,
+                                style: const TextStyle(fontSize: 12, color: AppColor.white),
+                                softWrap: true,
+                                textDirection: TextDirection.ltr, // направление текста слева направо
+                                overflow: TextOverflow.ellipsis, // обрезка текста, если он превышает доступную длину
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      width: 10,
-                    );
+                    return const SizedBox(width: 10);
                   },
-                  itemCount: DescriptionEntity.popularEntities.length,
+                  itemCount: 4,
                 ),
               ),
             ),
@@ -129,7 +122,7 @@ class _InformationScreenState extends State<InformationScreen> {
                 'ВСЕ ВИДЫ ЗАБОЛЕВАНИЙ',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: AppColor.blue,
                 ),
@@ -137,10 +130,8 @@ class _InformationScreenState extends State<InformationScreen> {
             ),
             Expanded(
               child: GridView.builder(
-                padding: EdgeInsets.all(8),
-
-                itemCount:
-                    DescriptionEntity.illlnessEntities.length, //itemCount
+                padding: const EdgeInsets.all(8),
+                itemCount: DescriptionEntity.illlnessEntities.length, //itemCount
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
@@ -148,73 +139,72 @@ class _InformationScreenState extends State<InformationScreen> {
                       _gotoDetailsPage(
                         context,
                         DescriptionEntity.illlnessEntities[index].name,
-                        DescriptionEntity
-                            .illlnessEntities[index].allDescription,
+                        DescriptionEntity.illlnessEntities[index].allDescription,
                         DescriptionEntity.illlnessEntities[index].image,
+                        DescriptionEntity.illlnessEntities[index].name + index.toString(),
                       );
                     },
                     child: Container(
                       width: 200,
-                      height: 300,
+                      alignment: Alignment.topCenter,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: AppColor.grey,
+                        border: Border.all(color: AppColor.blue.withOpacity(0.2)),
                       ),
-                      child: Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Hero(
+                            tag: DescriptionEntity.illlnessEntities[index].name + index.toString(),
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
                               child: CachedNetworkImage(
-                                imageUrl: DescriptionEntity
-                                    .illlnessEntities[index].image,
+                                imageUrl: DescriptionEntity.illlnessEntities[index].image,
                                 fit: BoxFit.cover,
+                                height: 120,
+                                width: 200,
                               ),
                             ),
-                            SizedBox(
-                              height: 6,
-                            ),
-                            Expanded(
-                              child: Text(
-                                '${DescriptionEntity.illlnessEntities[index].name}',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: AppColor.blue,
-                                ),
-                              ),
-                            ),
-                            Flexible(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Expanded(
-                                    flex: 8,
-                                    child: Text(
-                                      '${DescriptionEntity.illlnessEntities[index].description}',
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: AppColor.grey,
+                          ),
+                          const SizedBox(height: 6),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        DescriptionEntity.illlnessEntities[index].name,
+                                        style: const TextStyle(fontSize: 16, color: AppColor.blue),
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       ),
-                                    ),
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        DescriptionEntity.illlnessEntities[index].allDescription,
+                                        style: const TextStyle(fontSize: 12, color: AppColor.black),
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                      ),
+                                    ],
                                   ),
-                                  Expanded(
-                                      flex: 2,
-                                      child: Icon(
-                                        Icons.chevron_right_outlined,
-                                        size: 27,
-                                        color: AppColor.red,
-                                      )),
-                                ],
-                              ),
+                                ),
+                                const Icon(
+                                  Icons.chevron_right_outlined,
+                                  size: 24,
+                                  color: AppColor.red,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   );
@@ -232,16 +222,13 @@ class _InformationScreenState extends State<InformationScreen> {
     );
   }
 
-  void _gotoDetailsPage(
-      BuildContext context, String name, String description, String image) {
+  void _gotoDetailsPage(BuildContext context, String name, String description, String image, String tag) {
     Navigator.of(context).push(MaterialPageRoute<void>(
-      builder: (BuildContext context) => Hero(
-        tag: 'hero-rectangle',
-        child: MoreInfo(
-          name: name,
-          description: description,
-          image: image,
-        ),
+      builder: (BuildContext context) => MoreInfo(
+        name: name,
+        description: description,
+        image: image,
+        tag: tag,
       ),
     ));
   }

@@ -2,49 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:std/core/app_color.dargt.dart';
+import 'package:std/features/map/domain/entities/all_map_entities.dart';
 
 class MapSample extends StatefulWidget {
-  const MapSample({super.key});
+  const MapSample({super.key, required this.listDescriptionMapEntity});
+
+  final List<DescriptionMapEntity> listDescriptionMapEntity;
 
   @override
   State<MapSample> createState() => MapSampleState();
 }
 
 class MapSampleState extends State<MapSample> {
-  LatLng? latlng = LatLng(51.509364, -0.128928);
+  LatLng? latlng = const LatLng(39.720349, 47.222078);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FlutterMapCustomWidget(
-          height: 400, listCustomMarkers: _listCustomMarkers),
+        height: 400,
+        listCustomMarkers: widget.listDescriptionMapEntity
+            .map((e) => MarkerCustom(
+                  point: LatLng(e.shirota, e.dolgota),
+                  description: '${e.workingTime}\n\n${e.street}',
+                  title: e.name,
+                ))
+            .toList(),
+      ),
     );
   }
 }
 
-List<MarkerCustom> _listCustomMarkers = [
-  MarkerCustom(
-    point: const LatLng(59.962281, 30.3071388),
-    title: 'Ianis Chamalidy',
-    description: 'Большой проспект П.С., 55/6, Санкт-Петербург',
-  ),
-  MarkerCustom(
-    point: const LatLng(59.9346636, 30.3341599),
-    title: 'Ianis Chamalidy',
-    description: 'Невский пр., 48, Санкт-Петербург, 191011',
-  ),
-  MarkerCustom(
-    point: const LatLng(59.9317105, 30.359451),
-    title: 'Ianis Chamalidy',
-    description: 'Невский пр., 114-116, Санкт-Петербург',
-  ),
-];
-
 class FlutterMapCustomWidget extends StatefulWidget {
   const FlutterMapCustomWidget(
-      {super.key,
-      required this.height,
-      this.width = double.infinity,
-      required this.listCustomMarkers});
+      {super.key, required this.height, this.width = double.infinity, required this.listCustomMarkers});
 
   final double height;
   final double width;
@@ -84,7 +75,7 @@ class _FlutterMapCustomWidgetState extends State<FlutterMapCustomWidget> {
               }
             });
           },
-          zoom: 11,
+          zoom: 10,
         ),
         children: [
           TileLayer(
@@ -95,8 +86,8 @@ class _FlutterMapCustomWidgetState extends State<FlutterMapCustomWidget> {
             rotate: true,
             markers: widget.listCustomMarkers.map(
               (coordinate) {
-                const double height = 50;
-                const double width = 100;
+                const double height = 100;
+                const double width = 150;
                 return Marker(
                   point: coordinate.point,
                   height: height,
@@ -188,12 +179,9 @@ class _MarkerCustomWidgetState extends State<MarkerCustomWidget> {
                 children: [
                   Text(
                     widget.point.title,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold),
+                    style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
                     overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
+                    maxLines: 2,
                   ),
                   if (widget.point.description != null) ...[
                     const SizedBox(height: 2),
@@ -201,9 +189,8 @@ class _MarkerCustomWidgetState extends State<MarkerCustomWidget> {
                       child: Text(
                         widget.point.description!,
                         softWrap: true,
-                        maxLines: 3,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 8),
+                        maxLines: 5,
+                        style: const TextStyle(color: Colors.white, fontSize: 8),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
