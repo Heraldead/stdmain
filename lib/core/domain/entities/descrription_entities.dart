@@ -1,27 +1,9 @@
-import 'package:std/features/information/domain/entities/all_entities.dart';
+import 'all_entities.dart';
 
 class DescriptionEntity {
-  static List<PopularEntity> popularEntities = [
-    PopularEntity(
-      name: 'ПАПИИЛЛОМА',
-      description: 'Папилломы – это небольшие кожные новообразования, которые могут выступать над поверхностью кожи.',
-    ),
-    PopularEntity(
-      name: 'ВИЧ',
-      description:
-          'Вирус иммунодефицита человека (ВИЧ) поражает иммунную систему и ослабляет защиту от многих инфекций и некоторых типов рака, с которыми может',
-    ),
-    PopularEntity(
-      name: 'ХЛАМИДИОЗ',
-      description:
-          'Хламидиоз – инфекционное заболевание, которое передается преимущественно половым путем и является наиболее частой причиной негонококковых уретритов',
-    ),
-    PopularEntity(
-      name: 'СИФИЛИС',
-      description:
-          'Си́филис (устар.: лю́эс от лат. lues — зараза) — системное венерическое инфекционное заболевание с поражением кожи, слизистых оболочек, внутренних органов, ',
-    ),
-  ];
+  static List<String> getTags() {
+    return illlnessEntities.map((e) => e.tags).expand((element) => element).toSet().toList();
+  }
 
   static List<IllnessEntity> illlnessEntities = [
     IllnessEntity(
@@ -34,7 +16,7 @@ class DescriptionEntity {
         'кашель',
         'покраснение',
         'зуд',
-        'шелушение,',
+        'шелушение',
       ],
       allDescription:
           'Вирус иммунодефицита человека (ВИЧ) — это инфекция, поражающая иммунную систему организма. Самой поздней стадией ВИЧ-инфекции является синдром приобретенного иммунодефицита (СПИД). ВИЧ поражает белые клетки крови, что приводит к ослаблению иммунной системы.',

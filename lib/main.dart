@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:std/core/app_color.dargt.dart';
-import 'package:std/features/information/presentation/information.dart';
-import 'package:std/features/map/presentation/main_map_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:std/core/app_color.dargt.dart';
 import 'package:std/features/calendar_and_records/presentation/calendar/calendar_screen.dart';
+import 'package:std/features/information/presentation/information.dart';
+import 'package:std/features/map/presentation/main_map_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,15 +40,11 @@ class BottomNavigationBarExample extends StatefulWidget {
   const BottomNavigationBarExample({super.key});
 
   @override
-  State<BottomNavigationBarExample> createState() =>
-      _BottomNavigationBarExampleState();
+  State<BottomNavigationBarExample> createState() => _BottomNavigationBarExampleState();
 }
 
-class _BottomNavigationBarExampleState
-    extends State<BottomNavigationBarExample> {
+class _BottomNavigationBarExampleState extends State<BottomNavigationBarExample> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     InformationScreen(),
     CalendarScreen(),

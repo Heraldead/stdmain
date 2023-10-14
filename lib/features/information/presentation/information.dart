@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:std/core/app_color.dargt.dart';
+import 'package:std/core/domain/entities/descrription_entities.dart';
 import 'package:std/core/widgets/custom_app_bar.dart';
-import 'package:std/features/information/domain/entities/descrription_entities.dart';
 import 'package:std/features/information/presentation/more_info.dart';
 
 class InformationScreen extends StatefulWidget {
@@ -72,6 +72,7 @@ class _InformationScreenState extends State<InformationScreen> {
                           DescriptionEntity.illlnessEntities[index].allDescription,
                           DescriptionEntity.illlnessEntities[index].image,
                           '',
+                          DescriptionEntity.illlnessEntities[index].tags,
                         );
                       },
                       child: Container(
@@ -131,7 +132,8 @@ class _InformationScreenState extends State<InformationScreen> {
             Expanded(
               child: GridView.builder(
                 padding: const EdgeInsets.all(8),
-                itemCount: DescriptionEntity.illlnessEntities.length, //itemCount
+                itemCount: DescriptionEntity.illlnessEntities.length,
+                //itemCount
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
@@ -142,6 +144,7 @@ class _InformationScreenState extends State<InformationScreen> {
                         DescriptionEntity.illlnessEntities[index].allDescription,
                         DescriptionEntity.illlnessEntities[index].image,
                         DescriptionEntity.illlnessEntities[index].name + index.toString(),
+                        DescriptionEntity.illlnessEntities[index].tags,
                       );
                     },
                     child: Container(
@@ -163,7 +166,7 @@ class _InformationScreenState extends State<InformationScreen> {
                               child: CachedNetworkImage(
                                 imageUrl: DescriptionEntity.illlnessEntities[index].image,
                                 fit: BoxFit.cover,
-                                height: 120,
+                                height: 110,
                                 width: 200,
                               ),
                             ),
@@ -222,13 +225,15 @@ class _InformationScreenState extends State<InformationScreen> {
     );
   }
 
-  void _gotoDetailsPage(BuildContext context, String name, String description, String image, String tag) {
+  void _gotoDetailsPage(
+      BuildContext context, String name, String description, String image, String tag, List<String> symptoms) {
     Navigator.of(context).push(MaterialPageRoute<void>(
       builder: (BuildContext context) => MoreInfo(
         name: name,
         description: description,
         image: image,
         tag: tag,
+        symptoms: symptoms,
       ),
     ));
   }

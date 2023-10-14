@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:intl/intl.dart';
+import 'package:std/core/domain/entities/descrription_entities.dart';
 import 'package:std/core/widgets/custom_app_bar.dart';
 import 'package:std/features/calendar_and_records/models/record_model.dart';
 
@@ -236,14 +237,7 @@ class _SymptomsViewState extends State<SymptomsView> {
   String partner = '';
   String comment = '';
 
-  List<SymptomsTileModel> listSymptoms = [
-    SymptomsTileModel(symptom: 'Зуд в паховой области'),
-    SymptomsTileModel(symptom: 'Пот'),
-    SymptomsTileModel(symptom: 'Повышенная температура'),
-    SymptomsTileModel(symptom: 'Краснота'),
-    SymptomsTileModel(symptom: 'Высыпания на коже'),
-    SymptomsTileModel(symptom: 'Боль в голове'),
-  ];
+  List<SymptomsTileModel> listSymptoms = DescriptionEntity.getTags().map((e) => SymptomsTileModel(symptom: e)).toList();
 
   @override
   Widget build(BuildContext context) {
