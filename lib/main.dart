@@ -16,14 +16,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      localizationsDelegates: [
+    return MaterialApp(
+      theme: ThemeData.from(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF005BA1)),
+      ),
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [Locale('ru', 'RU')],
-      home: CalendarScreen(),
+      supportedLocales: const [Locale('ru', 'RU')],
+      home: const CalendarScreen(),
     );
   }
 }
