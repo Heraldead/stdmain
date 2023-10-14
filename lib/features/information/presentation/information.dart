@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:std/core/app_color.dargt.dart';
 import 'package:std/core/widgets/custom_app_bar.dart';
@@ -149,64 +150,71 @@ class _InformationScreenState extends State<InformationScreen> {
                         DescriptionEntity.illlnessEntities[index].name,
                         DescriptionEntity
                             .illlnessEntities[index].allDescription,
+                        DescriptionEntity.illlnessEntities[index].image,
                       );
                     },
                     child: Container(
                       width: 200,
-                      height: 270,
+                      height: 300,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: AppColor.white,
+                        color: AppColor.grey,
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                              flex: 8,
-                              child: Container(
-                                color: Colors.blue,
-                              )),
-                          SizedBox(
-                            height: 6,
-                          ),
-                          Expanded(
-                            child: Text(
-                              '${DescriptionEntity.illlnessEntities[index].name}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: AppColor.blue,
+                      child: Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: CachedNetworkImage(
+                                imageUrl: DescriptionEntity
+                                    .illlnessEntities[index].image,
+                                fit: BoxFit.cover,
                               ),
                             ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Expanded(
-                                  flex: 8,
-                                  child: Text(
-                                    '${DescriptionEntity.illlnessEntities[index].description}',
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: AppColor.grey,
+                            SizedBox(
+                              height: 6,
+                            ),
+                            Expanded(
+                              child: Text(
+                                '${DescriptionEntity.illlnessEntities[index].name}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: AppColor.blue,
+                                ),
+                              ),
+                            ),
+                            Flexible(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Expanded(
+                                    flex: 8,
+                                    child: Text(
+                                      '${DescriptionEntity.illlnessEntities[index].description}',
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: AppColor.grey,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                    flex: 2,
-                                    child: Icon(
-                                      Icons.chevron_right_outlined,
-                                      size: 27,
-                                      color: AppColor.red,
-                                    )),
-                              ],
+                                  Expanded(
+                                      flex: 2,
+                                      child: Icon(
+                                        Icons.chevron_right_outlined,
+                                        size: 27,
+                                        color: AppColor.red,
+                                      )),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -224,13 +232,15 @@ class _InformationScreenState extends State<InformationScreen> {
     );
   }
 
-  void _gotoDetailsPage(BuildContext context, String name, String description) {
+  void _gotoDetailsPage(
+      BuildContext context, String name, String description, String image) {
     Navigator.of(context).push(MaterialPageRoute<void>(
       builder: (BuildContext context) => Hero(
         tag: 'hero-rectangle',
         child: MoreInfo(
           name: name,
           description: description,
+          image: image,
         ),
       ),
     ));

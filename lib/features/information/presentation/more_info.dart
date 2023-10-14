@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:std/core/app_color.dargt.dart';
 import 'package:std/core/widgets/custom_app_bar.dart';
@@ -6,11 +7,18 @@ import 'package:std/features/information/domain/entities/descrription_entities.d
 class MoreInfo extends StatelessWidget {
   final String name;
   final String description;
-  const MoreInfo({super.key, required this.name, required this.description});
+  final String image;
+  const MoreInfo({
+    super.key,
+    required this.name,
+    required this.description,
+    required this.image,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.white,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,8 +104,11 @@ class MoreInfo extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 height: 300,
-                child: Container(
-                  color: Colors.blue,
+                child: Expanded(
+                  child: CachedNetworkImage(
+                    imageUrl: image,
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             ),
