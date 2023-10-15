@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:std/core/domain/entities/descrription_entities.dart';
 import 'package:std/core/widgets/custom_app_bar.dart';
 import 'package:std/features/calendar_and_records/models/record_model.dart';
+import 'package:std/features/calendar_and_records/providers/calendar_and_records_provider.dart';
 
 import 'components/symptoms_selection.dart';
 import 'components/text_field_custom.dart';
@@ -22,7 +24,7 @@ class _EventRecordScreenState extends State<EventRecordScreen> with TickerProvid
   @override
   void initState() {
     tabController = TabController(
-      length: TypeRecord.values.length,
+      length: RecordEnum.values.length,
       initialIndex: 0,
       vsync: this,
     );
@@ -150,7 +152,23 @@ class _SexualHealthViewState extends State<SexualHealthView> {
               ),
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            final dateTime = DateTime(selectDate.year, selectDate.month, selectDate.day)
+                .add(Duration(hours: selectTime.hour, minutes: selectTime.minute))
+                .millisecondsSinceEpoch
+                .toString();
+            final record = RecordModel(
+              type: RecordEnum.sexualHealth,
+              timestamp: dateTime,
+              message: comment,
+              partner: partner,
+              listSymptoms: [],
+              dateString: DateFormat('yMd').format(DateTime(selectDate.year, selectDate.month, selectDate.day)),
+            );
+            context.read<CalendarAndRecordsProvider>().saveRecords(record);
+            // final stateNew = state;
+            Navigator.of(context).pop();
+          },
         ),
         const SizedBox(height: 16),
       ],
@@ -234,7 +252,6 @@ class SymptomsView extends StatefulWidget {
 class _SymptomsViewState extends State<SymptomsView> {
   DateTime selectDate = DateTime.now();
   TimeOfDay selectTime = TimeOfDay.now();
-  String partner = '';
   String comment = '';
 
   List<SymptomsTileModel> listSymptoms = DescriptionEntity.getTags().map((e) => SymptomsTileModel(symptom: e)).toList();
@@ -249,9 +266,9 @@ class _SymptomsViewState extends State<SymptomsView> {
               children: [
                 const SizedBox(height: 12),
                 SymptomsSelectionWidget(
-                  listSymptoms: listSymptoms,
+                  listSymptoms: List.from(listSymptoms),
                   onChoiceOfTile: (List<SymptomsTileModel> list) {
-                    print(list);
+                    listSymptoms = list;
                   },
                 ),
                 const SizedBox(height: 16),
@@ -295,7 +312,28 @@ class _SymptomsViewState extends State<SymptomsView> {
               ),
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            final dateTime = DateTime(selectDate.year, selectDate.month, selectDate.day)
+                .add(Duration(hours: selectTime.hour, minutes: selectTime.minute))
+                .millisecondsSinceEpoch
+                .toString();
+            List<String> symptoms = [];
+            for (var element in listSymptoms) {
+              if (element.selected) {
+                symptoms.add(element.symptom);
+              }
+            }
+            final record = RecordModel(
+              type: RecordEnum.symptoms,
+              timestamp: dateTime,
+              message: comment,
+              partner: '',
+              listSymptoms: symptoms,
+              dateString: DateFormat('yMd').format(DateTime(selectDate.year, selectDate.month, selectDate.day)),
+            );
+            context.read<CalendarAndRecordsProvider>().saveRecords(record);
+            Navigator.of(context).pop();
+          },
         ),
         const SizedBox(height: 16),
       ],

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:std/core/app_color.dargt.dart';
 import 'package:std/core/widgets/custom_app_bar.dart';
 import 'package:std/features/calendar_and_records/models/record_model.dart';
 import 'package:std/features/calendar_and_records/presentation/calendar/components/record.dart';
 import 'package:std/features/calendar_and_records/presentation/event_record/event_record_screen.dart';
 
+import '../../providers/calendar_and_records_provider.dart';
 import 'components/calendar.dart';
 
 class CalendarScreen extends StatefulWidget {
@@ -18,6 +22,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   @override
   Widget build(BuildContext context) {
+    CalendarAndRecordsProvider calendarAndRecordsProvider = context.watch<CalendarAndRecordsProvider>();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFF005BA1),
@@ -42,7 +47,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
             const CustomAppBarWidget(
               title: 'Календарь',
               icon: '📅',
-              isShowBackButton: true,
             ),
             Expanded(
               child: Padding(
@@ -50,36 +54,25 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 child: Column(
                   children: [
                     const SizedBox(height: 12),
-                    CalendarWidget(
-                      getEventsForDay: (DateTime dataTime) {
-                        return [];
-                      },
-                      onSelectedDay: (DateTime dateTime) {
-                        setState(() {
-                          selectDate = dateTime;
-                        });
-                      },
+                    ColoredBox(
+                      color: Colors.white,
+                      child: CalendarWidget(
+                        getEventsForDay: (DateTime dataTime) {
+                          String dateKey = DateFormat('yMd').format(dataTime);
+                          return calendarAndRecordsProvider.state[dateKey] ?? [];
+                        },
+                        onSelectedDay: (DateTime dateTime) {
+                          setState(() {
+                            selectDate = dateTime;
+                          });
+                        },
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Expanded(
                       key: UniqueKey(),
-                      child: const RecordEntriesWidget(
-                        listRecordModel: [
-                          RecordModel(
-                            type: TypeRecord.symptoms,
-                            partner: '1231',
-                            message: '1231243',
-                            listSymptoms: ['213'],
-                            timestamp: '123123',
-                          ),
-                          RecordModel(
-                            type: TypeRecord.sexualHealth,
-                            partner: '1231',
-                            message: '1231243',
-                            listSymptoms: ['213'],
-                            timestamp: '123123',
-                          ),
-                        ],
+                      child: RecordEntriesWidget(
+                        listRecordModel: calendarAndRecordsProvider.state[DateFormat('yMd').format(selectDate)] ?? [],
                       ),
                     ),
                   ],
@@ -104,15 +97,105 @@ class RecordEntriesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-        itemCount: listRecordModel.length,
-        itemBuilder: (context, index) {
-          return RecordWidget(
-            recordModel: listRecordModel[index],
-            onTap: (_) {},
-          );
-        },
-        separatorBuilder: (context, index) {
-          return const SizedBox(height: 8);
-        });
+      itemCount: listRecordModel.length,
+      itemBuilder: (context, index) {
+        return RecordWidget(
+          recordModel: listRecordModel[index],
+          onTap: (record) {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => RecordInformationWidget(
+                record: record,
+              ),
+            ));
+          },
+        );
+      },
+      separatorBuilder: (context, index) {
+        return const SizedBox(height: 8);
+      },
+    );
+  }
+}
+
+class RecordInformationWidget extends StatelessWidget {
+  const RecordInformationWidget({super.key, required this.record});
+
+  final RecordModel record;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            CustomAppBarWidget(
+              title: record.type.title,
+              icon: '📰',
+              isShowBackButton: true,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        DateFormat.yMd('ru').add_Hm().format(
+                              DateTime.fromMillisecondsSinceEpoch(
+                                int.parse(record.timestamp),
+                              ),
+                            ),
+                        textAlign: TextAlign.start,
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const Divider(color: AppColor.black),
+                      if (record.partner.isNotEmpty) ...[
+                        const SizedBox(height: 12),
+                        const Text(
+                          'Партнёр',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          record.partner,
+                          style: const TextStyle(color: AppColor.black),
+                        ),
+                      ],
+                      if (record.listSymptoms.isNotEmpty) ...[
+                        const SizedBox(height: 12),
+                        const Text(
+                          'Симптомы',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 6),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          itemBuilder: (_, index) => Text('  -  ${record.listSymptoms[index]}'),
+                          separatorBuilder: (context, index) => const SizedBox(height: 6),
+                          itemCount: record.listSymptoms.length,
+                        ),
+                      ],
+                      const SizedBox(height: 12),
+                      const Text(
+                        'Заметка',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        record.message,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

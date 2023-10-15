@@ -21,7 +21,7 @@ class RecordWidget extends StatelessWidget {
       },
       child: Ink(
         width: double.infinity,
-        height: 84,
+        height: 90,
         decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(width: 1, color: Colors.black12)),
         ),
@@ -31,7 +31,7 @@ class RecordWidget extends StatelessWidget {
             SizedBox(
               width: 60,
               child: SvgPicture.asset(
-                recordModel.type == TypeRecord.symptoms ? 'assets/icons/disease.svg' : 'assets/icons/sexual_health.svg',
+                recordModel.type == RecordEnum.symptoms ? 'assets/icons/disease.svg' : 'assets/icons/sexual_health.svg',
                 height: 48,
                 width: 48,
               ),
@@ -42,7 +42,10 @@ class RecordWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    recordModel.type.title,
+                    recordModel.type.title +
+                        (recordModel.type == RecordEnum.sexualHealth && recordModel.partner.isNotEmpty
+                            ? ' - ${recordModel.partner}'
+                            : ''),
                     style: const TextStyle(
                       color: Color(0xFF121212),
                       fontSize: 16,
@@ -52,28 +55,30 @@ class RecordWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    DateFormat.yMd('ru').add_Hms().format(
+                    DateFormat.yMd('ru').add_Hm().format(
                           DateTime.fromMillisecondsSinceEpoch(
                             int.parse(recordModel.timestamp),
                           ),
                         ),
                     style: const TextStyle(
                       color: Color(0xFF7F7F7F),
-                      fontSize: 12,
+                      fontSize: 10,
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 2),
                   Text(
-                    recordModel.message,
+                    recordModel.type == RecordEnum.symptoms && recordModel.listSymptoms.isNotEmpty
+                        ? recordModel.listSymptoms.join(', ')
+                        : recordModel.message,
                     style: const TextStyle(
                       color: Color(0xFF121212),
                       fontSize: 12,
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w400,
                     ),
-                    maxLines: 3,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,
                   ),

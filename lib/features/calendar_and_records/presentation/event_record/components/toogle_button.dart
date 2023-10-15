@@ -36,7 +36,7 @@ class _ToggleButtonWidgetState extends State<ToggleButtonWidget> {
         });
         widget.onEvent(index);
       },
-      children: TypeRecord.values
+      children: RecordEnum.values
           .map((e) => Padding(padding: const EdgeInsets.symmetric(horizontal: 8), child: Text(e.title)))
           .toList(),
     );
