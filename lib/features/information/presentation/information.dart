@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:std/core/app_color.dargt.dart';
+import 'package:std/core/domain/entities/all_entities.dart';
 import 'package:std/core/domain/entities/descrription_entities.dart';
 import 'package:std/core/widgets/custom_app_bar.dart';
 import 'package:std/features/information/presentation/more_info.dart';
@@ -13,6 +14,8 @@ class InformationScreen extends StatefulWidget {
 }
 
 class _InformationScreenState extends State<InformationScreen> {
+  List<IllnessEntity> illnesses = DescriptionEntity.illlnessEntities;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,14 +38,33 @@ class _InformationScreenState extends State<InformationScreen> {
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 12, left: 10, right: 12),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12, left: 10, right: 12),
               child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Вич',
-                  helperText: 'ВВЕДИТЕ ВАШИ СИМПТОМЫ',
+                decoration: const InputDecoration(
+                  hintText: 'ВИЧ',
+                  helperText: 'Введите название болезни или симптом',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) {
+                  if (value.isNotEmpty) {
+                    List<IllnessEntity> listIll = [];
+                    for (var item in DescriptionEntity.illlnessEntities) {
+                      if (item.name.toLowerCase().contains(value.toLowerCase())) {
+                        listIll.add(item);
+                      }
+                      for (var symptom in item.tags) {
+                        if (symptom.toLowerCase().contains(value.toLowerCase())) {
+                          listIll.add(item);
+                        }
+                      }
+                    }
+                    illnesses = listIll.toSet().toList();
+                  } else {
+                    illnesses = DescriptionEntity.illlnessEntities;
+                  }
+                  setState(() {});
+                },
               ),
             ),
             const Padding(
@@ -66,6 +88,7 @@ class _InformationScreenState extends State<InformationScreen> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
+                        FocusScope.of(context).unfocus();
                         _gotoDetailsPage(
                           context,
                           DescriptionEntity.illlnessEntities[index].name,
@@ -132,19 +155,20 @@ class _InformationScreenState extends State<InformationScreen> {
             Expanded(
               child: GridView.builder(
                 padding: const EdgeInsets.all(8),
-                itemCount: DescriptionEntity.illlnessEntities.length,
+                itemCount: illnesses.length,
                 //itemCount
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
+                      FocusScope.of(context).unfocus();
                       _gotoDetailsPage(
                         context,
-                        DescriptionEntity.illlnessEntities[index].name,
-                        DescriptionEntity.illlnessEntities[index].allDescription,
-                        DescriptionEntity.illlnessEntities[index].image,
-                        DescriptionEntity.illlnessEntities[index].name + index.toString(),
-                        DescriptionEntity.illlnessEntities[index].tags,
+                        illnesses[index].name,
+                        illnesses[index].allDescription,
+                        illnesses[index].image,
+                        illnesses[index].name + index.toString(),
+                        illnesses[index].tags,
                       );
                     },
                     child: Container(
@@ -160,11 +184,11 @@ class _InformationScreenState extends State<InformationScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Hero(
-                            tag: DescriptionEntity.illlnessEntities[index].name + index.toString(),
+                            tag: illnesses[index].name + index.toString(),
                             child: ClipRRect(
                               borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
                               child: CachedNetworkImage(
-                                imageUrl: DescriptionEntity.illlnessEntities[index].image,
+                                imageUrl: illnesses[index].image,
                                 fit: BoxFit.cover,
                                 height: 110,
                                 width: 200,
@@ -182,7 +206,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        DescriptionEntity.illlnessEntities[index].name,
+                                        illnesses[index].name,
                                         style: const TextStyle(fontSize: 16, color: AppColor.blue),
                                         softWrap: true,
                                         overflow: TextOverflow.ellipsis,
@@ -190,7 +214,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                       ),
                                       const SizedBox(height: 2),
                                       Text(
-                                        DescriptionEntity.illlnessEntities[index].allDescription,
+                                        illnesses[index].allDescription,
                                         style: const TextStyle(fontSize: 12, color: AppColor.black),
                                         softWrap: true,
                                         overflow: TextOverflow.ellipsis,

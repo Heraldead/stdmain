@@ -36,8 +36,7 @@ class DescriptionEntity {
           'Хламидиоз - это инфекционное заболевание, вызванное бактериями Chlamydia trachomatis. У больных могут возникать различные симптомы, включая воспаление и боли внизу живота.',
     ),
     IllnessEntity(
-      image:
-          'https://clinica-opora.ru/wp-content/uploads/2021/01/d187d182d0be-d182d0b0d0bad0bed0b5-d0bfd0b0d185d0bed0b2d0b0d18f-d0bbd0b8d0bcd184d0b0d0b4d0b5d0bdd0bed0bfd0b0d182d0b8d18f-d187d182d0be_60045d4f86966.jpeg',
+      image: 'https://www.vladtime.ru/uploads/posts/2018-06/1528795827_pale-treponema-spirochetes.jpg',
       rating: 85,
       name: 'Сифилис',
       description:
@@ -51,8 +50,7 @@ class DescriptionEntity {
           'Сифилис — это инфекционное заболевание, вызванное бактерией Treponema pallidum. Оно проходит через несколько стадий и может привести к разнообразным симптомам, включая язвы, высыпания и внутренние органы.',
     ),
     IllnessEntity(
-      image:
-          'https://clinica-opora.ru/wp-content/uploads/2021/01/d187d182d0be-d182d0b0d0bad0bed0b5-d0bfd0b0d185d0bed0b2d0b0d18f-d0bbd0b8d0bcd184d0b0d0b4d0b5d0bdd0bed0bfd0b0d182d0b8d18f-d187d182d0be_60045d4f86966.jpeg',
+      image: 'https://probakterii.ru/wp-content/uploads/2018/11/Enterobacter-cloacae.jpg',
       rating: 85,
       name: 'Вирус папилломы человека (ВПЧ)',
       description:
@@ -65,8 +63,7 @@ class DescriptionEntity {
           'ВПЧ - это вирус, который может вызывать бородавки и привести к раку шейки матки и другим заболеваниям. Он передается половым путем и может иметь разнообразные симптомы.',
     ),
     IllnessEntity(
-      image:
-          'https://clinica-opora.ru/wp-content/uploads/2021/01/d187d182d0be-d182d0b0d0bad0bed0b5-d0bfd0b0d185d0bed0b2d0b0d18f-d0bbd0b8d0bcd184d0b0d0b4d0b5d0bdd0bed0bfd0b0d182d0b8d18f-d187d182d0be_60045d4f86966.jpeg',
+      image: 'https://www.vancomycin.ru/wp-content/uploads/2017/06/1496761823_s-orbakayte-14.jpg',
       rating: 70,
       name: 'Гонорея',
       description:
@@ -80,8 +77,7 @@ class DescriptionEntity {
           'Гонорея - это инфекционное заболевание, передающееся половым путем, вызванное бактерией Neisseria gonorrhoeae. Она может привести к различным симптомам и осложнениям, если не лечится своевременно.',
     ),
     IllnessEntity(
-      image:
-          'https://clinica-opora.ru/wp-content/uploads/2021/01/d187d182d0be-d182d0b0d0bad0bed0b5-d0bfd0b0d185d0bed0b2d0b0d18f-d0bbd0b8d0bcd184d0b0d0b4d0b5d0bdd0bed0bfd0b0d182d0b8d18f-d187d182d0be_60045d4f86966.jpeg',
+      image: 'https://img.joinfo.com/i/2018/11/800x0/5bdaa9b89957f.jpg',
       rating: 80,
       name: 'Герпес',
       description:
@@ -95,8 +91,7 @@ class DescriptionEntity {
           'Герпес - это вирусное заболевание, вызванное вирусами герпеса. Оно может привести к воспалению кожи и слизистых оболочек с проявлением боли, покраснения и возникновения характерных пузырей.',
     ),
     IllnessEntity(
-      image:
-          'https://clinica-opora.ru/wp-content/uploads/2021/01/d187d182d0be-d182d0b0d0bad0bed0b5-d0bfd0b0d185d0bed0b2d0b0d18f-d0bbd0b8d0bcd184d0b0d0b4d0b5d0bdd0bed0bfd0b0d182d0b8d18f-d187d182d0be_60045d4f86966.jpeg',
+      image: 'https://yachist.ru/wp-content/uploads/2018/02/gardnerella-2.jpg',
       rating: 70,
       name: 'Вагинальные инфекции',
       description:
@@ -110,8 +105,7 @@ class DescriptionEntity {
           'Вагинальные инфекции могут быть вызваны различными патогенами, такими как бактерии, вирусы и грибки. Они могут вызывать жжение, зуд и изменение вагинальных выделений.',
     ),
     IllnessEntity(
-      image:
-          'https://clinica-opora.ru/wp-content/uploads/2021/01/d187d182d0be-d182d0b0d0bad0bed0b5-d0bfd0b0d185d0bed0b2d0b0d18f-d0bbd0b8d0bcd184d0b0d0b4d0b5d0bdd0bed0bfd0b0d182d0b8d18f-d187d182d0be_60045d4f86966.jpeg',
+      image: 'https://clpmag.com/wp-content/uploads/2018/11/STI_Trichomonas-vaginalis_crop3500x2052p-1280x640.jpg',
       rating: 60,
       name: 'Трихомониаз',
       description: 'Трихомониаз - это заболевание, вызванное простейшими паразитами, и передается половым путем.',

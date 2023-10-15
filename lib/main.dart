@@ -67,6 +67,7 @@ class _BottomNavigationBarExampleState extends State<BottomNavigationBarExample>
   ];
 
   void _onItemTapped(int index) {
+    FocusScope.of(context).unfocus();
     setState(() {
       _selectedIndex = index;
     });
