@@ -24,11 +24,12 @@ class _InformationScreenState extends State<InformationScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CustomAppBarWidget(
-              title: 'STD INFO',
+              title: 'Библиотека знаний',
               icon: '🔍',
             ),
             const Padding(
-              padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 16, bottom: 6),
+              padding:
+                  EdgeInsets.only(left: 12.0, right: 12.0, top: 16, bottom: 6),
               child: Text(
                 'ПОИСК',
                 style: TextStyle(
@@ -50,11 +51,15 @@ class _InformationScreenState extends State<InformationScreen> {
                   if (value.isNotEmpty) {
                     List<IllnessEntity> listIll = [];
                     for (var item in DescriptionEntity.illlnessEntities) {
-                      if (item.name.toLowerCase().contains(value.toLowerCase())) {
+                      if (item.name
+                          .toLowerCase()
+                          .contains(value.toLowerCase())) {
                         listIll.add(item);
                       }
                       for (var symptom in item.tags) {
-                        if (symptom.toLowerCase().contains(value.toLowerCase())) {
+                        if (symptom
+                            .toLowerCase()
+                            .contains(value.toLowerCase())) {
                           listIll.add(item);
                         }
                       }
@@ -92,7 +97,8 @@ class _InformationScreenState extends State<InformationScreen> {
                         _gotoDetailsPage(
                           context,
                           DescriptionEntity.illlnessEntities[index].name,
-                          DescriptionEntity.illlnessEntities[index].allDescription,
+                          DescriptionEntity
+                              .illlnessEntities[index].allDescription,
                           DescriptionEntity.illlnessEntities[index].image,
                           '',
                           DescriptionEntity.illlnessEntities[index].tags,
@@ -115,16 +121,21 @@ class _InformationScreenState extends State<InformationScreen> {
                             Flexible(
                               child: Text(
                                 DescriptionEntity.illlnessEntities[index].name,
-                                style: const TextStyle(fontSize: 16, color: AppColor.white),
+                                style: const TextStyle(
+                                    fontSize: 16, color: AppColor.white),
                               ),
                             ),
                             Flexible(
                               child: Text(
-                                DescriptionEntity.illlnessEntities[index].description,
-                                style: const TextStyle(fontSize: 12, color: AppColor.white),
+                                DescriptionEntity
+                                    .illlnessEntities[index].description,
+                                style: const TextStyle(
+                                    fontSize: 12, color: AppColor.white),
                                 softWrap: true,
-                                textDirection: TextDirection.ltr, // направление текста слева направо
-                                overflow: TextOverflow.ellipsis, // обрезка текста, если он превышает доступную длину
+                                textDirection: TextDirection
+                                    .ltr, // направление текста слева направо
+                                overflow: TextOverflow
+                                    .ellipsis, // обрезка текста, если он превышает доступную длину
                               ),
                             )
                           ],
@@ -176,7 +187,8 @@ class _InformationScreenState extends State<InformationScreen> {
                       alignment: Alignment.topCenter,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: AppColor.blue.withOpacity(0.2)),
+                        border:
+                            Border.all(color: AppColor.blue.withOpacity(0.2)),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,7 +198,8 @@ class _InformationScreenState extends State<InformationScreen> {
                           Hero(
                             tag: illnesses[index].name + index.toString(),
                             child: ClipRRect(
-                              borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                              borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(20)),
                               child: CachedNetworkImage(
                                 imageUrl: illnesses[index].image,
                                 fit: BoxFit.cover,
@@ -203,11 +216,13 @@ class _InformationScreenState extends State<InformationScreen> {
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         illnesses[index].name,
-                                        style: const TextStyle(fontSize: 16, color: AppColor.blue),
+                                        style: const TextStyle(
+                                            fontSize: 16, color: AppColor.blue),
                                         softWrap: true,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
@@ -215,7 +230,9 @@ class _InformationScreenState extends State<InformationScreen> {
                                       const SizedBox(height: 2),
                                       Text(
                                         illnesses[index].allDescription,
-                                        style: const TextStyle(fontSize: 12, color: AppColor.black),
+                                        style: const TextStyle(
+                                            fontSize: 12,
+                                            color: AppColor.black),
                                         softWrap: true,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
@@ -249,8 +266,8 @@ class _InformationScreenState extends State<InformationScreen> {
     );
   }
 
-  void _gotoDetailsPage(
-      BuildContext context, String name, String description, String image, String tag, List<String> symptoms) {
+  void _gotoDetailsPage(BuildContext context, String name, String description,
+      String image, String tag, List<String> symptoms) {
     Navigator.of(context).push(MaterialPageRoute<void>(
       builder: (BuildContext context) => MoreInfo(
         name: name,

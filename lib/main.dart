@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:std/core/app_color.dargt.dart';
 import 'package:std/features/calendar_and_records/presentation/calendar/calendar_screen.dart';
 import 'package:std/features/calendar_and_records/providers/calendar_and_records_provider.dart';
+import 'package:std/features/dating/presentation/dating.dart';
 import 'package:std/features/information/presentation/information.dart';
 import 'package:std/features/map/presentation/main_map_screen.dart';
 
@@ -55,15 +56,18 @@ class BottomNavigationBarExample extends StatefulWidget {
   const BottomNavigationBarExample({super.key});
 
   @override
-  State<BottomNavigationBarExample> createState() => _BottomNavigationBarExampleState();
+  State<BottomNavigationBarExample> createState() =>
+      _BottomNavigationBarExampleState();
 }
 
-class _BottomNavigationBarExampleState extends State<BottomNavigationBarExample> {
+class _BottomNavigationBarExampleState
+    extends State<BottomNavigationBarExample> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     InformationScreen(),
     CalendarScreen(),
     MainMapScreen(),
+    DatingScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -84,7 +88,7 @@ class _BottomNavigationBarExampleState extends State<BottomNavigationBarExample>
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Главная',
+            label: 'Библиотека',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month_rounded),
@@ -93,6 +97,10 @@ class _BottomNavigationBarExampleState extends State<BottomNavigationBarExample>
           BottomNavigationBarItem(
             icon: Icon(Icons.map_outlined),
             label: 'Карта',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.meeting_room),
+            label: 'Знакомства',
           ),
         ],
         currentIndex: _selectedIndex,

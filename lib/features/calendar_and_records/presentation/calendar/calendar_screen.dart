@@ -22,7 +22,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    CalendarAndRecordsProvider calendarAndRecordsProvider = context.watch<CalendarAndRecordsProvider>();
+    CalendarAndRecordsProvider calendarAndRecordsProvider =
+        context.watch<CalendarAndRecordsProvider>();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFF005BA1),
@@ -45,7 +46,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         child: Column(
           children: [
             const CustomAppBarWidget(
-              title: 'Календарь',
+              title: 'Календарь здоровья',
               icon: '📅',
             ),
             Expanded(
@@ -59,7 +60,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       child: CalendarWidget(
                         getEventsForDay: (DateTime dataTime) {
                           String dateKey = DateFormat('yMd').format(dataTime);
-                          return calendarAndRecordsProvider.state[dateKey] ?? [];
+                          return calendarAndRecordsProvider.state[dateKey] ??
+                              [];
                         },
                         onSelectedDay: (DateTime dateTime) {
                           setState(() {
@@ -72,7 +74,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     Expanded(
                       key: UniqueKey(),
                       child: RecordEntriesWidget(
-                        listRecordModel: calendarAndRecordsProvider.state[DateFormat('yMd').format(selectDate)] ?? [],
+                        listRecordModel: calendarAndRecordsProvider
+                                .state[DateFormat('yMd').format(selectDate)] ??
+                            [],
                       ),
                     ),
                   ],
@@ -147,7 +151,8 @@ class RecordInformationWidget extends StatelessWidget {
                               ),
                             ),
                         textAlign: TextAlign.start,
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       const Divider(color: AppColor.black),
                       if (record.partner.isNotEmpty) ...[
@@ -155,7 +160,8 @@ class RecordInformationWidget extends StatelessWidget {
                         const Text(
                           'Партнёр',
                           textAlign: TextAlign.start,
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 6),
                         Text(
@@ -168,13 +174,16 @@ class RecordInformationWidget extends StatelessWidget {
                         const Text(
                           'Симптомы',
                           textAlign: TextAlign.start,
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 6),
                         ListView.separated(
                           shrinkWrap: true,
-                          itemBuilder: (_, index) => Text('  -  ${record.listSymptoms[index]}'),
-                          separatorBuilder: (context, index) => const SizedBox(height: 6),
+                          itemBuilder: (_, index) =>
+                              Text('  -  ${record.listSymptoms[index]}'),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 6),
                           itemCount: record.listSymptoms.length,
                         ),
                       ],
@@ -182,7 +191,8 @@ class RecordInformationWidget extends StatelessWidget {
                       const Text(
                         'Заметка',
                         textAlign: TextAlign.start,
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       Text(
                         record.message,
